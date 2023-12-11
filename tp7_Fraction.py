@@ -108,7 +108,7 @@ class Fraction:
         POST : Returns a new Fraction which give the division of self by other
         """
         if other.is_zero():
-            raise ValueError("A fraction cannot divised by zero")
+            raise ZeroDivisionError("A fraction cannot divised by zero")
         new_num = self.num * other.num
         new_den = self.den = other.den
         return Fraction(new_num, new_den)
