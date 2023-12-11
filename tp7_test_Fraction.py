@@ -1,4 +1,4 @@
-from Fraction import Fraction
+from tp7_Fraction import Fraction
 
 try:
     # Création des fractions
