@@ -1,3 +1,13 @@
+class NegativeResultException(Exception):
+    def __init__(self, message="The result cannot be negative"):
+        self.message = message
+        super().__init__(self.message)
+
+class NulDenominatorException(Exception):
+    def __init__(self, message="Denominator cannot be zero"):
+        self.message = message
+        super().__init__(self.message)
+        
 class Fraction:
     """Class representing a fraction and operations on it
 
@@ -15,11 +25,10 @@ class Fraction:
         RAISE : The denominator cannot be zero (den != 0)
         """
         if den == 0:
-            raise ZeroDivisionError("Denominator cannot be zero")
+            raise NulDenominatorException()
         self.num = num
         self.den = den
         self._reduce()
-
 
     @property
     def numerator(self):
@@ -65,10 +74,9 @@ class Fraction:
         proper_fraction = Fraction(self.num % self.den, self.den)
         if integer_part == 0:
             return str(proper_fraction)
-        elif proper_fraction.is_zero():
+        if proper_fraction.is_zero():
             return str(integer_part)
-        else:
-            return f"{integer_part} + {proper_fraction}"
+        return f"{integer_part} + {proper_fraction}"
 
     # ------------------ Operators overloading ------------------
 
@@ -77,9 +85,12 @@ class Fraction:
 
          PRE : other is an instance for fraction
          POST : Returns a new Fraction which give the sum of other and self
+         RAISE: The result cannot be negative
          """
         new_num = self.num * other.den + other.num * self.den
         new_den = self.den * other.den
+        if new_num < 0:
+            raise NegativeResultException()
         return Fraction(new_num, new_den)
 
     def __sub__(self, other):
@@ -87,9 +98,12 @@ class Fraction:
 
         PRE : other is an instance for fraction
         POST : Returns a new Fraction which give the subtraction of other and self
+        RAISE: The result cannot be negative
         """
         new_num = self.num * other.den - other.num * self.den
         new_den = self.den * other.den
+        if new_num < 0:
+            raise NegativeResultException()
         return Fraction(new_num, new_den)
 
     def __mul__(self, other):
@@ -97,9 +111,12 @@ class Fraction:
 
         PRE : other is an instance for fraction
         POST : Returns a new Fraction which give the multiplication of other and self
+        RAISE: The result cannot be negative
         """
         new_num = self.num * other.num
         new_den = self.den * other.den
+        if new_num < 0:
+            raise NegativeResultException()
         return Fraction(new_num, new_den)
 
     def __truediv__(self, other):
@@ -188,5 +205,3 @@ class Fraction:
         """
         diff = abs(self.num * other.den - self.den * other.num)
         return diff == 1
-
-
