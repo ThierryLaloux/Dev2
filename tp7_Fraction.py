@@ -9,12 +9,13 @@ class Fraction:
     def __init__(self, num=0, den=1):
         """This builds a fraction based on some numerator and denominator.
 
-        PRE : The denominator cannot be zero (den != 0)
+        PRE : The numerator and the denominator by default
         POST : The fraction is created with a provised numerator and denominator.
             The fraction is build in the simplest form.
+        RAISE : The denominator cannot be zero (den != 0)
         """
         if den == 0:
-            raise ValueError("Denominator cannot be zero")
+            raise ZeroDivisionError("Denominator cannot be zero")
         self.num = num
         self.den = den
         self._reduce()
@@ -106,11 +107,12 @@ class Fraction:
 
         PRE : other is an instance for fraction which isn't equal to zero
         POST : Returns a new Fraction which give the division of self by other
+        RAISE : A fraction cannot divised by zero
         """
         if other.is_zero():
             raise ZeroDivisionError("A fraction cannot divised by zero")
         new_num = self.num * other.num
-        new_den = self.den = other.den
+        new_den = self.den * other.den
         return Fraction(new_num, new_den)
 
     def __pow__(self, other):
