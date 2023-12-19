@@ -1,13 +1,8 @@
-class NegativeResultException(Exception):
-    def __init__(self, message="The result cannot be negative"):
-        self.message = message
-        super().__init__(self.message)
-
 class NulDenominatorException(Exception):
     def __init__(self, message="Denominator cannot be zero"):
         self.message = message
         super().__init__(self.message)
-        
+
 class Fraction:
     """Class representing a fraction and operations on it
 
@@ -19,10 +14,10 @@ class Fraction:
     def __init__(self, num=0, den=1):
         """This builds a fraction based on some numerator and denominator.
 
-        PRE : The numerator and the denominator by default
+        PRE : -
         POST : The fraction is created with a provised numerator and denominator.
-            The fraction is build in the simplest form.
-        RAISE : The denominator cannot be zero (den != 0)
+               The fraction is build in the simplifed form.
+        RAISE : NulDenominatorException when The denominator is zero (den != 0)
         """
         if den == 0:
             raise NulDenominatorException()
@@ -57,7 +52,7 @@ class Fraction:
     def __str__(self):
         """Return a textual representation of the reduced form of the fraction
 
-        PRE : None
+        PRE : -
         POST : A string representation of the reduced fraction is returned
         """
         return f"{self.num}/{self.den}"
@@ -67,7 +62,7 @@ class Fraction:
 
         A mixed number is the sum of an integer and a proper fraction
 
-        PRE : None
+        PRE : -
         POST : A string representation of the mixed number is returned.
         """
         integer_part = self.num // self.den
@@ -85,12 +80,9 @@ class Fraction:
 
          PRE : other is an instance for fraction
          POST : Returns a new Fraction which give the sum of other and self
-         RAISE: The result cannot be negative
          """
         new_num = self.num * other.den + other.num * self.den
         new_den = self.den * other.den
-        if new_num < 0:
-            raise NegativeResultException()
         return Fraction(new_num, new_den)
 
     def __sub__(self, other):
@@ -98,12 +90,9 @@ class Fraction:
 
         PRE : other is an instance for fraction
         POST : Returns a new Fraction which give the subtraction of other and self
-        RAISE: The result cannot be negative
         """
         new_num = self.num * other.den - other.num * self.den
         new_den = self.den * other.den
-        if new_num < 0:
-            raise NegativeResultException()
         return Fraction(new_num, new_den)
 
     def __mul__(self, other):
@@ -111,20 +100,17 @@ class Fraction:
 
         PRE : other is an instance for fraction
         POST : Returns a new Fraction which give the multiplication of other and self
-        RAISE: The result cannot be negative
         """
         new_num = self.num * other.num
         new_den = self.den * other.den
-        if new_num < 0:
-            raise NegativeResultException()
         return Fraction(new_num, new_den)
 
     def __truediv__(self, other):
         """Overloading of the / operator for fractions
 
-        PRE : other is an instance for fraction which isn't equal to zero
+        PRE : other is an instance for fraction
         POST : Returns a new Fraction which give the division of self by other
-        RAISE : A fraction cannot divised by zero
+        RAISE : ZeroDivisionError when A fraction cannot divised by zero
         """
         if other.is_zero():
             raise ZeroDivisionError("A fraction cannot divised by zero")
@@ -154,7 +140,7 @@ class Fraction:
     def __float__(self):
         """Returns the decimal value of the fraction
 
-        PRE : None
+        PRE : -
         POST : Return a floating value of fraction
         """
         return self.num / self.den
@@ -166,7 +152,7 @@ class Fraction:
     def is_zero(self):
         """Check if a fraction's value is 0
 
-        PRE : None
+        PRE : -
         POST : Returns a boolean if the value fraction = 0
         """
         return self.num == 0
@@ -174,7 +160,7 @@ class Fraction:
     def is_integer(self):
         """Check if a fraction is integer (ex : 8/4, 3, 2/2, ...)
 
-        PRE : None
+        PRE : -
         POST : Returns a boolean if the fraction is integer
         """
         return self.num % self.den == 0
@@ -182,7 +168,7 @@ class Fraction:
     def is_proper(self):
         """Check if the absolute value of the fraction is < 1
 
-        PRE : None
+        PRE : -
         POST : Returns a boolean if the fraction had an absolute value
         """
         return abs(self.num) < abs(self.den)
@@ -190,7 +176,7 @@ class Fraction:
     def is_unit(self):
         """Check if a fraction's numerator is 1 in its reduced form
 
-        PRE : None
+        PRE : -
         POST : Return a boolean if the fraction is equal 1 in its reduced form
         """
         return self.num == 1 and self.den == 1
