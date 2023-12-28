@@ -115,8 +115,8 @@ class Fraction:
         """
         if other.is_zero():
             raise ZeroDivisionError("A fraction cannot divised by zero")
-        new_num = self.num * other.num
-        new_den = self.den * other.den
+        new_num = self.num * other.den
+        new_den = self.den * other.num
         return Fraction(new_num, new_den)
 
     def __pow__(self, other):
@@ -190,5 +190,7 @@ class Fraction:
         PRE : other is an instance of fraction
         POST : Return a boolean if the fractions are adjacent or no
         """
-        diff = abs(self.num * other.den - self.den * other.num)
+
+        diff = abs(self.num * other.den - other.num * self.den)
         return diff == 1
+
