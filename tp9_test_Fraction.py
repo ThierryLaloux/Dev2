@@ -1,5 +1,5 @@
 import unittest
-from Fraction import Fraction, NulDenominatorException
+from tp9_Fraction import Fraction, NulDenominatorException
 
 class TestFraction(unittest.TestCase):
 
